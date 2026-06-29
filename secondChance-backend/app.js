@@ -3,8 +3,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const secondChanceItemsRoutes = require('./routes/secondChanceItemsRoutes');
-// Task 1: Import searchRoutes
 const searchRoutes = require('./routes/searchRoutes');
+// Task 1: Import authRoutes
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = 3060;
@@ -16,8 +17,9 @@ app.use('/images', express.static('public/images'));
 
 // Register Routes
 app.use('/api/secondchance/items', secondChanceItemsRoutes);
-// Task 2: Add searchRoutes to the server
 app.use('/api/secondchance/search', searchRoutes);
+// Task 2: Petakan /api/auth ke authRoutes
+app.use('/api/auth', authRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {
