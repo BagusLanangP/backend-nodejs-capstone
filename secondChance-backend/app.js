@@ -2,24 +2,29 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-// Task 1: Import the secondChanceItemsRoutes
 const secondChanceItemsRoutes = require('./routes/secondChanceItemsRoutes');
+// Task 1: Import searchRoutes
+const searchRoutes = require('./routes/searchRoutes');
 
 const app = express();
 const PORT = 3060;
 
-// Middleware dasar untuk parse JSON dan handling CORS
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Menyediakan akses static folder untuk file gambar yang diunggah
 app.use('/images', express.static('public/images'));
 
-// Task 2: Add the secondChanceItemsRoutes to the server using app.use()
+// Register Routes
 app.use('/api/secondchance/items', secondChanceItemsRoutes);
+// Task 2: Add searchRoutes to the server
+app.use('/api/secondchance/search', searchRoutes);
 
-// Jalankan server Express pada port 3060
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+});
+
 app.listen(PORT, () => {
-    console.log(`Server is running smoothly on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
